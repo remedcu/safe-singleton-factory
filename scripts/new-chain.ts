@@ -32,9 +32,11 @@ async function newChainWrapper() {
 	} finally {
 		const summaryFile = process.env.SUMMARY_FILE
 		if (summaryFile) {
-			fs.writeFileSync(summaryFile, JSON.stringify(summary, null, 2))			
-			console.log(`Summary written to ${summaryFile}`)
-			console.log(`Summary env ${process.env.SUMMARY_FILE}`)
+			fs.writeFileSync(summaryFile, JSON.stringify(summary, null, 2))
+			// Read summary.json and print it to the console
+			const summaryContent = fs.readFileSync(summaryFile, 'utf-8')
+			const s = JSON.parse(summaryContent)
+			console.log(s)
 		} else {
 			console.log(summary)
 		}
