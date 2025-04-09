@@ -19,6 +19,9 @@ jobs:
           npm ci
           RPC_URL=$(echo "$ISSUE_BODY" | grep -E -o 'https?://[^ ]+' -m 1 | head -1)
           SUMMARY_FILE=summary.json RPC=$RPC_URL npm run verify:new-chain-request || true
+          echo "$SUMMARY_FILE"
+          echo "----------------------"
+          echo "$(jq -r '.commentOutput' $SUMMARY_FILE)"
           echo "COMMENT_OUTPUT=$(jq -r '.commentOutput' $SUMMARY_FILE)" >> $GITHUB_ENV
           echo "LABEL_OPERATION=$(jq -r '.labelOperation' $SUMMARY_FILE)" >> $GITHUB_ENV
         env:
